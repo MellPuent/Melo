@@ -1,0 +1,35 @@
+# Importar librerías necesarias
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Generar datos de ejemplo (cantidad de habitaciones y precio de la casa)
+habitaciones = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+precio = np.array([100, 10, 50, 70, 85])
+
+# Crear un DataFrame con los datos
+data = pd.DataFrame({'habitaciones': habitaciones.flatten(), 'precio': precio})
+
+# Dividir los datos en conjunto de entrenamiento y prueba
+X_train, X_test, y_train, y_test = train_test_split(data['habitaciones'], data['precio'], test_size=0.2, random_state=42)
+
+# Regresión lineal simple
+reg_simple = LinearRegression()
+reg_simple.fit(X_train.values.reshape(-1, 1), y_train)
+
+# Predicción con regresión lineal simple
+pred_simple = reg_simple.predict(X_test.values.reshape(-1, 1))
+
+# Regresión lineal múltiple
+reg_multiple = LinearRegression()
+reg_multiple.fit(data[['habitaciones']], data['precio'])
+
+# Predicción con regresión lineal múltiple
+pred_multiple = reg_multiple.predict(X_test.values.reshape(-1, 1))
+
+# Imprimir los resultados
+print("Predicción con regresión lineal simple:")
+print(pred_simple)
+print("Predicción con regresión lineal múltiple:")
+print(pred_multiple)
